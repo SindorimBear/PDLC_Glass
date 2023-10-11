@@ -1,5 +1,5 @@
-# PDLC_Glass
-A prototype for PDLC Glass
+# Night time light-detecting safety glass 
+A prototype for a product that detects high-intensity light to protect the driver's vision
 
 ## Table of Contents
   ### 1. Briefing
