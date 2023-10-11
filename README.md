@@ -8,7 +8,7 @@ A prototype for a product that detects high-intensity light to protect the drive
 1. Summary
 1. Conclusion
 
-## 1. Briefing
+## Briefing
 Problem: Headlights for carss are important for illuminating night-time road. They can provide the driver a clear vision of what is happening ahead and allows them to avoid any accidents. However, some types of cars have brought forth high-intensity headlights, which are causing unneccessary car accidents.
   High-intensity headlights and LEDS can cause temporary blindess to other drivers, much like the sun glaring into our eyes during daytime. These high-intensity headlights makes it impossible to clearly view objects moving directly in front of the driver, which makes the accdidents more fatal than the sunlight during daytime.
   Another problem is that LED headlights look more bluer in the output spectrum than halogen. The human eye have difficulty processing blue light, since blue wavelengths tend to focus just ahead of the retina rather than on it.
@@ -16,7 +16,7 @@ Problem: Headlights for carss are important for illuminating night-time road. Th
 
 Solution Idea: We decided to invent a glass that could prevent such casualities. The class will detect high intensity lights or LEDS, send the coordinates for the position of the light input, and diminsh the light long enough to prevent problems for the driver.
 
-## 2. Theory 
+## Theory 
   Generally, most of the dual headlights attached on vehicles emit white light, which is produced by using halogen bulbs, xenon/ HID (High-Intensity Discharge) bulbs, LED (Light Emitting-Diode) bulbs, etc. 
   High-intensity lights are the main sources of temporary blindness. According to the headlight regulations in United Sates governed by Federal Motor Vehicle Safety Standard (FMVSS) No 108., There are no minimum and maximum intensity regulations for headlights yet. The human eye can take 10,000 lux for 8 hours. Considering the distance between the driver and the headlight of the opposite lane diminishes as they cross path and the fact that a high-intensity light beam can produce 75,000 lux, a direct light beam to the human eye would cause not only instant temporary blindness, but also permanent eye damage.
   LED lights have proven to be less problematic to the human eye than that caused by high-intensity lights. However, prolonged and instense exposure to LEDs can cause temporary visual impairment.
@@ -30,9 +30,60 @@ Solution Idea: We decided to invent a glass that could prevent such casualities.
   3. Camera
      Using the opencv package in python, we can pick up the position and intensity of the light intensity from the camera. Since most of the vehicles these days have black box cameras, which have a resolution of 720p, we used a camera with a similar resolution.
 
-##  3. Code 
+##  Code 
   ###  A. Python 
-  ###  B. Arduino 
-##  4. Summary 
+  '''
+from imutils import contours
+from skimage import measure
+import numpy as np
+import imutils
+import cv2 as cv
+import serial
+import time
+  '''
+These are the necessary packages for the code to run.
 
-##  5. Conclusion 
+imutils package functions as a basic image proccessing method. The function is necessary for two reasons: 
+-resize and divide the video capture images
+-add a contour to track the driver's vision.
+
+skimage package was necessary for the same reason as imutils
+
+'''
+ser = serial.Serial('/dev/ttyUSB0',9600)
+print("\ndetect_multiple.py launched\n")
+ser.write(b'a')
+print("\n============time sleep 1===========\n")
+time.sleep(1)
+'''
+
+
+'''
+def detect_multiple(image) : 
+'''
+
+
+'''
+def destination(x,y,w,h):
+'''
+
+
+'''
+def int2bin(i):
+'''
+
+
+'''
+def offSpot(lst):
+'''
+  ###  B. Arduino 
+##  Summary 
+
+##  Conclusion
+  After testing with 6 PDLC films on a screen, we concluded that the basic concept of detecting light and deflecting it is possible. However, there were some criticla issues that still needed attention.
+  1. Inconsistency of light detection
+openCV package of python was successful of detecting lights one at a time. However, we realize that the road consists of myriad of lights, such as the traffic lights, house lights, and etc. If the product was to successfully be imported in a vehicle, it would need an AI to selectively detect the light beam directed right at the driver's vision.
+  2. Controlling transparency of PDLC film
+PDLC films are capable of blocking light beams, but we needed further research on controlling the transparency of the films. Since we were using Arduino serial ports, which are only capable of controlling the on/off switch of the PDLC, we were unable to control the transparency. For further improvement, the transparency of the films are pivotal so that the driver's vision doesn't get hindered.
+  3. Power supply limit of Arduino pack
+A small arduino package only consists battery packages, which couldn't support the PDLC power supply for much long. Importing a car battery would work, but the battery usage of the car would increase drastically, causing the car to malfunction during driving. A reliable power source seems necessary to perfect the product.
