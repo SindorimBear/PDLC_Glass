@@ -2,11 +2,11 @@
 A prototype for a product that detects high-intensity light to protect the driver's vision
 
 ## Table of Contents
-  ### * Briefing
-  ### * Theory
-  ### * Code
-  ### * Summary
-  ### * Conclusion
+* Briefing
+* Theory
+* Code
+* Summary
+* Conclusion
 
 ## 1. Briefing
 Problem: Headlights for carss are important for illuminating night-time road. They can provide the driver a clear vision of what is happening ahead and allows them to avoid any accidents. However, some types of cars have brought forth high-intensity headlights, which are causing unneccessary car accidents.
