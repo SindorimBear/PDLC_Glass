@@ -5,6 +5,7 @@ A prototype for a product that detects high-intensity light to protect the drive
 1. Briefing
 1. Theory
 1. Code
+1. Procedure
 1. Summary
 1. Conclusion
 
@@ -77,8 +78,14 @@ def int2bin(i):
 def offSpot(lst):
 '''
   ###  B. Arduino 
+
+##  Procedure
+  1. Connecting serial ports
+  2. Cooking arduino breadboard
+  3. 
 ##  Summary 
 
+  After connecting 6 PDLC films to each of the serial port.
 ##  Conclusion
   After testing with 6 PDLC films on a screen, we concluded that the basic concept of detecting light and deflecting it is possible. However, there were some criticla issues that still needed attention.
   1. Inconsistency of light detection
