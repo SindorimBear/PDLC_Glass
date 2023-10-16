@@ -33,6 +33,11 @@ Solution Idea: We decided to invent a glass that could prevent such casualities.
 
 ##  Code 
   ###  A. Python 
+  There are two codes I have written for this project
+  1. detect_multiple.py
+  2. main.py
+
+1. detect_multiple.py
   '''
 from imutils import contours
 from skimage import measure
@@ -41,7 +46,7 @@ import imutils
 import cv2 as cv
 import serial
 import time
-  '''
+
 These are the necessary packages for the code to run.
 
 imutils package functions as a basic image proccessing method. The function is necessary for two reasons: 
@@ -50,34 +55,220 @@ imutils package functions as a basic image proccessing method. The function is n
 
 skimage package was necessary for the same reason as imutils
 
-'''
+
 ser = serial.Serial('/dev/ttyUSB0',9600)
 print("\ndetect_multiple.py launched\n")
 ser.write(b'a')
 print("\n============time sleep 1===========\n")
 time.sleep(1)
-'''
 
 
-'''
+
+
 def detect_multiple(image) : 
-'''
 
 
-'''
 def destination(x,y,w,h):
-'''
 
 
-'''
 def int2bin(i):
-'''
 
 
-'''
+
 def offSpot(lst):
-'''
+
+
+
+2. main.py
+
+   
   ###  B. Arduino 
+
+  char input;
+void setup() {
+  Serial.begin(9600);
+  pinMode(6,OUTPUT);
+  pinMode(7,OUTPUT);
+  pinMode(8,OUTPUT);
+  pinMode(9,OUTPUT);
+  pinMode(10,OUTPUT);
+  pinMode(11,OUTPUT);
+  
+  digitalWrite(6, HIGH);
+  digitalWrite(7,HIGH);
+  digitalWrite(8,HIGH);
+  digitalWrite(9,HIGH);
+  digitalWrite(10,HIGH);
+  digitalWrite(11,HIGH);
+}
+
+void loop() {
+
+  if(Serial.available())
+  {
+    while(Serial.available())
+      {
+      input = Serial.read();
+     if(input == 'A')
+      {
+        digitalWrite(6,LOW);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(150);
+      }
+      else if(input == 'B')
+      {
+        digitalWrite(6,HIGH);
+        digitalWrite(7, LOW);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(150);
+      }
+      
+      else if(input == 'C')
+      {
+        digitalWrite(6,HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,LOW);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(150);
+      }
+      
+      else if(input == 'D')
+      {
+        digitalWrite(6,HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,LOW);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(150);
+      }
+      else if(input == 'E')
+      {
+        digitalWrite(6,HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,LOW);
+        digitalWrite(11,HIGH);
+        delay(150);
+      }
+      else if(input == 'F')
+      {
+        digitalWrite(6,HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,LOW);
+        delay(150);
+      }
+      break;
+    }
+    
+  }
+      else
+      {
+        digitalWrite(6, HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(150);
+      }
+      
+ }
+
+
+      
+
+
+      
+      /*if(input == String("[1]"))
+      {
+        digitalWrite(6, LOW);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(100);
+      }
+      
+      else if (input == String("[2]"))
+      {
+        digitalWrite(6, HIGH);
+        digitalWrite(7,LOW);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(100);
+      }
+      else if (input == String("[3]"))
+      {
+        digitalWrite(6, HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,LOW);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(100);
+      }
+      else if (input == "D")
+      {
+        digitalWrite(6, HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,LOW);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(100);
+      }
+      else if (input == String("[5]"))
+      {
+        digitalWrite(6, HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,LOW);
+        digitalWrite(11,HIGH);
+        delay(100);
+ 
+      }
+      else if (input == String("[6]"))
+      {
+        digitalWrite(6, HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,LOW);
+        delay(100);
+      }
+      
+      else
+      {
+        digitalWrite(6, HIGH);
+        digitalWrite(7,HIGH);
+        digitalWrite(8,HIGH);
+        digitalWrite(9,HIGH);
+        digitalWrite(10,HIGH);
+        digitalWrite(11,HIGH);
+        delay(100);
+        
+      }
+   }*/
+
 
 ##  Procedure
   1. Connecting serial ports
