@@ -3,11 +3,11 @@ A prototype for a product that detects high-intensity light to protect the drive
 
 ## Table of Contents
 1. Briefing
-1. Theory
-1. Code
-1. Procedure
-1. Summary
-1. Conclusion
+2. Theory
+3. Code
+4. Procedure
+5. Summary
+6. Conclusion
 
 ## Briefing
 Problem: Headlights for carss are important for illuminating night-time road. They can provide the driver a clear vision of what is happening ahead and allows them to avoid any accidents. However, some types of cars have brought forth high-intensity headlights, which are causing unneccessary car accidents.
@@ -272,8 +272,12 @@ void loop() {
 
 ##  Procedure
   1. Connecting serial ports
-  2. Cooking arduino breadboard
-  3. 
+  2. Cooking arduino nano breadboard
+  3. Connect PDLC films to the serial port
+  4. Connect Camera with Computer
+  5. Connect the arduino nano with computer
+  6. Run Python code from terminal
+  7. Flash light beams on each
 ##  Summary 
 
   After connecting 6 PDLC films to each of the serial port.
