@@ -46,7 +46,7 @@ import imutils
 import cv2 as cv
 import serial
 import time
-
+```
 These are the necessary packages for the code to run.
 
 imutils package functions as a basic image proccessing method. The function is necessary for two reasons: 
@@ -55,7 +55,7 @@ imutils package functions as a basic image proccessing method. The function is n
 
 skimage package was necessary for the same reason as imutils
 
-
+```
 ser = serial.Serial('/dev/ttyUSB0',9600)
 print("\ndetect_multiple.py launched\n")
 ser.write(b'a')
