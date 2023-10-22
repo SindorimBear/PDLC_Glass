@@ -38,7 +38,7 @@ Solution Idea: We decided to invent a glass that could prevent such casualities.
   2. main.py
 
 1. detect_multiple.py
-  '''
+```
 from imutils import contours
 from skimage import measure
 import numpy as np
@@ -76,14 +76,15 @@ def int2bin(i):
 
 
 def offSpot(lst):
-
+```
 
 
 2. main.py
-
+```
+```
    
   ###  B. Arduino 
-
+  ```
   char input;
 void setup() {
   Serial.begin(9600);
@@ -268,7 +269,7 @@ void loop() {
         
       }
    }*/
-
+```
 
 ##  Procedure
   1. Connecting serial ports
