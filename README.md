@@ -55,35 +55,149 @@ imutils package functions as a basic image proccessing method. The function is n
 
 skimage package was necessary for the same reason as imutils
 
+
+The following code is where the USB serial port for Arduino will be called into python.
+The first line calls in the serial ports as the variable ser.
+The second line will print "detect_multiple.py launched" if the serial port is properly recognized. Otherwise, the code will return a syntax error.
+Due to the battery supply of the serial port and Arduino Nano takes time to give and take signals to each other, it needs a break in the middle.
 ```
 ser = serial.Serial('/dev/ttyUSB0',9600)
 print("\ndetect_multiple.py launched\n")
-ser.write(b'a')
 print("\n============time sleep 1===========\n")
 time.sleep(1)
-
-
-
-
+```
+detect_multiple function does the following operations:
+1. Detect the brightest light in the caemra view by grayscaling, dilating and eroding the image. Doing this will remove unnecessary noises from the image. For more information, read the following article about eroding and dilating in opencv:  https://docs.opencv.org/3.4/db/df6/tutorial_erosion_dilatation.html
+2. Track the brightest light in image and return the coordinates by masking the image. I used contours to add a new layer to the image and return the brightest area from the image. For more information, you can visit the link: https://docs.opencv.org/4.x/dd/d49/tutorial_py_contour_features.html
+3. Calculate the position of the circle and return which area the circled contour is at. The returned position will signal the arduino nano code and shut down it's power supply, causing it to block the light.
+```
 def detect_multiple(image) : 
+    gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    blurred = cv.GaussianBlur(gray, (51, 51), 0)
+    thresh = cv.threshold(blurred, 245, 255, cv.THRESH_BINARY)[1]
 
+    thresh = cv.erode(thresh, None, iterations=2)
+    thresh = cv.dilate(thresh, None, iterations=4)
 
+    labels = measure.label(thresh, connectivity=2, background=0)
+    mask = np.zeros(thresh.shape, dtype = "uint8")
+
+    # loop over the unique components
+    for label in np.unique(labels):
+        if label == 0 :
+            continue
+            
+        labelMask = np.zeros(thresh.shape, dtype="uint8")
+        labelMask[labels == label] = 255
+        numPixels = cv.countNonZero(labelMask)
+        if numPixels > 300:
+            mask = cv.add(mask, labelMask)
+
+    cnts = cv.findContours(mask.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    cnts = imutils.grab_contours(cnts)
+    cnts = contours.sort_contours(cnts)[0]
+    
+    lst = []
+    time.sleep(0.1)
+    print("\n============time sleep 0.1===========\n")
+    # ser.write(b'a')
+    for (i, c) in enumerate(cnts):
+        # Draw the bright spot on the image
+        (x,y,w,h) = cv.boundingRect(c)
+        spot = destination(x,y,w,h)
+        
+        if (spot is not None):
+            if spot not in lst:
+                lst.append(spot)
+            print("Detected Square : ", spot)
+            ser.write(int2bin(spot))
+            print(lst)
+        ((cX, cY), radius) = cv.minEnclosingCircle(c)
+        cv.circle(image, (int(cX), int(cY)), int(radius), (0,0,255), 3)
+        cv.putText(image, "#{}".format(i+1), (x,y-15),cv.FONT_HERSHEY_SIMPLEX, 0.45, (0,0,255),2)
+    offSpot(lst)
+    return image
+```
+The code below divides the image into 6 sections and return the value to the detect_multiple function.
+```
 def destination(x,y,w,h):
-
-
+    dest_x=x+w/2
+    dest_y=y+h/2
+    if dest_x<213 and dest_y<240:
+        return 1
+    elif dest_x<213 and dest_y>=240:
+        return 2
+    elif 213<=dest_x<426 and dest_y<240:
+        return 3
+    elif 213<=dest_x<426 and dest_y>=240:
+        return 4
+    elif 426<=dest_x<640 and dest_y<240:
+        return 5
+    elif 426<=dest_x<640 and dest_y>=240:
+        return 6
+    else:
+        pass
+```
+Since the arduino program only receive values as binary code, the integer in python needed to be altered into binary function manually.
+```
 def int2bin(i):
-
-
-
-def offSpot(lst):
+  if i == 1:
+        return b'1'
+    elif i == 2:
+        return b'2'
+    elif i == 3:
+        return b'3'
+    elif i == 4:
+        return b'4'
+    elif i == 5:
+        return b'5'
+    elif i == 6:
+        return b'6'
+    else :
+        return 
 ```
-
-
 2. main.py
+This file activates the camera. If the camera is properly activated, detect_multiple.py will be called in. Otherwise, it will return an error.
 ```
+import Detect.detect_multiple as detect
+import cvTools
+import cv2 as cv
+
+# module import
+def main() :
+    # Reading capture device
+    capture = cv.VideoCapture(0)
+
+    while True:
+        isTrue, frame = capture.read()
+        
+        try:
+            detect_frame = detect.detect_multiple(frame)
+            
+            cv.imshow('Video', detect_frame)
+
+
+            if cv.waitKey(1) & 0xFF==ord('d'):
+                break
+        except:
+            cv.imshow('Video', frame)
+            if cv.waitKey(1) & 0xFF==ord('d'):
+                break
+    capture.release()
+    cv.destroyAllWindows()
+
+    return 0
+
+if __name__ == "__main__":
+    if main() == 0:
+        print("\nLight_Detecting terminated successfully!")
+    else:
+        print("\nThere is something wrong. I recommend you to kill every processes which is related to this program.")
+    
 ```
    
   ###  B. Arduino 
+The arduino nano used in this experiment had 6 serials connected to it. Whenver the signal is returned from the python code, the serial port will be deactivated. Since the PDLC film turns invisible when electicity flows, the arduino code acts as a on/off switch.
   ```
   char input;
 void setup() {
@@ -189,13 +303,7 @@ void loop() {
       
  }
 
-
-      
-
-
-      
-      /*if(input == String("[1]"))
-      {
+{
         digitalWrite(6, LOW);
         digitalWrite(7,HIGH);
         digitalWrite(8,HIGH);
