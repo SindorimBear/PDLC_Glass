@@ -388,8 +388,10 @@ void loop() {
   6. Run Python code from terminal
   7. Flash light beams on each
 ##  Summary 
-
-  After connecting 6 PDLC films to each of the serial port.
+  The product was a success. Whenever light was detected in the section, the proper PDLC film was turned off. I was able to test this in multiple cameras and the result was best shown in a Full HD camera vision. Although the experiment was a success, there are some factors I would recommend.
+   A. Attachment of separate battery supplies into the serial port.
+   B. Usage of camera with above 2K resolution. I ran low on budget, so I couldn't buy a camera with a resolution higher than 2k.
+   C. Training an reinforced learning algorithm AI. A well trained AI would've resolved the issue of detecting the proper light with ease. 
 ##  Conclusion
   After testing with 6 PDLC films on a screen, we concluded that the basic concept of detecting light and deflecting it is possible. However, there were some criticla issues that still needed attention.
   1. Inconsistency of light detection
