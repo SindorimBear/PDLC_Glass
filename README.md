@@ -37,7 +37,7 @@ Solution Idea: We decided to invent a glass that could prevent such casualities.
   1. detect_multiple.py
   2. main.py
 
-####1. detect_multiple.py
+#### 1. detect_multiple.py
 ```
 from imutils import contours
 from skimage import measure
