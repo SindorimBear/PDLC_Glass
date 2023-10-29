@@ -37,7 +37,7 @@ Solution Idea: We decided to invent a glass that could prevent such casualities.
   1. detect_multiple.py
   2. main.py
 
-1. detect_multiple.py
+####1. detect_multiple.py
 ```
 from imutils import contours
 from skimage import measure
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     
 ```
    
-  ###  B. Arduino 
+  ####  B. Arduino 
 The arduino nano used in this experiment had 6 serials connected to it. Whenver the signal is returned from the python code, the serial port will be deactivated. Since the PDLC film turns invisible when electicity flows, the arduino code acts as a on/off switch.
   ```
   char input;
